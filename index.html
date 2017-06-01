@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="de">
+	<head>
+		<!-- Festlegen des Schriftsatzes auf UTF-8 andere meta Daten-->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Marcel Liewald">
+
+		
+		<title> Robo-Arbeitsraum </title>	
+		
+		<!-- aktuellsten jQuery Stand einbinden-->
+		<script src="https://code.jquery.com/jquery-latest.js"></script>
+		
+		<!-- Einbinden der "Sytles" -->
+		<link rel="stylesheet" type"text/css" href="styles.css">
+		<styles src="styles.css" ></styles>
+		
+		<!-- Einbinden  des JS/jQuery Codes-->
+		<script src="script.js"></script>
+		
+	</head>
+	
+	<body>
+		<div id="Einfuehrung">
+			<h1> Willkommen im Kontrollzentrum! </h1>
+			<hr>
+			<p id="Anleitung"> Nehmen sie mit dem Mitarbeiter den Roboter auf und stellen Sie ihn in den Arbeitsbereich<br>
+				Im Dropdown-Menü kann die Laufgeschwindigkeit des Mitarbeiters geändert werden und der Roboter mit einem geeigneten Greifer ausgerüstet werden!<br>
+			</p>
+			<hr>
+		</div>
+		<div id="DropDown">
+			<!-- DropDown-Menü mit Drag'n'Drop um verschiedene Attribute der Objekte zu ändern-->
+			<nav>
+				<ul>
+					<li><a href="#" title="Neustart" id="neustarten">Neustart</a></li>
+					<li class="submenu"><a href="#" title="Aktoren anzeigen">Greifer</a>
+						<ul>
+							<li class="submenu"><a href="#" title="Pneumatische Greifer">Pneumatisch</a>
+								<ul>
+									<li><a href="#" title="2 Finger Greifer" ><img src="2Finger_Pn.jpg" 
+									draggable="true" ondragstart="drag(event)" width="30" height="30" id="drag4"></a></li>
+									<li><a href="#" title="3 Finger Greifer"><img src="3Finger_Pn.jpg" 
+									draggable="true" ondragstart="drag(event)" width="30" height="30" id="drag3"></a></li>
+								</ul>
+							</li>
+							<li class="submenu"><a href="#" title="Elektrische Greifer">Elektrische</a>
+								<ul>
+									<li><a href="#" title="2 Finger Greifer"><img src="2Finger_El.jpg" 
+									draggable="true" ondragstart="drag(event)" width="30" height="30" id="drag2"> </a></li>
+									<li><a href="#" title="3 Finger Greifer"><img src="3Finger_El.jpg" 
+									draggable="true" ondragstart="drag(event)" width="30" height="30" id="drag1"> </a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="submenu"><a href="#" title="Geschwindigkeiten regeln">Geschwindigkeit</a>
+						<ul>
+							<li class="submenu"><a href="#" title="Mitarbeiter Geschwindigkeit">Mitarbeiter</a>
+								<ul>
+									<li><a href="#" class ="vSet" id="vSet1" title="1 px / click">1   </a></li>
+									<li><a href="#" class ="vSet" id="vSet10" title="10 px / click">10  </a></li>
+									<li><a href="#" class ="vSet" id="vSet100" title="100 px / click">100 </a></li>
+								</ul>
+							</li>											
+						</ul>
+					</li>
+					<!--funktioniert nur wenn man den tab per window.open() erzeugt -->
+					<li><a href="#" title="Programm schließen" id="beenden">Beenden</a></li>
+				</ul>
+			</nav>
+		</div>
+		<br>
+		<br>
+		<div id="Anwendung">
+			<!-- Hauptbereich der Anwendung-->
+			<table id="raeumlicheAufteilung">
+				<tr class="großeTabelle" class="AbmessungAnwendung1">
+					<!-- 2D-Darstellung des "Spiels" -->
+					<td class="großeTabelle">
+					<div id="arbeitsraum">
+						
+						<img src="mitarbeiter_3.jpg" id="imgMit" title="imgMitarbeiter">  
+						<img src="imgRob.jpg" id="imgRob" title="imgRoboter">
+						<center><img src="Arbeitsraum_500x200.jpg" id="imgRaum" title="imgRaum"></center>
+					</div>	
+					</td>
+					<!-- visuelle Darstellung des Roboters -->
+					<td class="großeTabelle" class="AbmessungAnwendung1" id="Rob">
+						<div id="div1"  ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					</td>
+				</tr>
+				<tr class="großeTabelle" class="AbmessungAnwendung2">
+					<!-- Interface zum "steuern" des Objektes "Mitarbeiter"-->
+					<td class="großeTabelle">
+						<div>
+						<table id="SteurungsPfeile">
+							<tr >
+								<td>
+									<table id="steuerung">
+									<tr>
+										<td>
+										</td>
+										<td>
+											<center><button id="hoch" class=buttonPfeil><img src="Pfeil_hoch.jpg"></button></center>
+										</td>
+										<td>
+										</td>
+										
+									</tr>
+									<tr>
+										<td>
+											<center><button id="links" class=buttonPfeil><img src="Pfeil_hoch.jpg"></button></center>
+										</td>
+										<td>
+											<div id="mitteSteuerung" >
+											
+											</div>
+										</td>
+										<td>
+											<center><button id="rechts" class=buttonPfeil><img src="Pfeil_hoch.jpg"></button></center>
+										</td>
+										
+									</tr>
+									<tr>
+										<td>
+										</td>
+										<td>
+											<center><button id="runter" class=buttonPfeil><img src="Pfeil_hoch.jpg"></button></center>
+										</td>
+										<td>
+										</td>
+										
+									</tr>
+									
+									</table>
+								</td>
+								<td id="Konsole">
+								</td>
+							</tr>
+						</table>
+						</div>
+					</td>
+					<!-- derzeitige Attribute der Objekte  --> 
+					<td class="großeTabelle">
+					<center>
+						<div id="aktuelleWerte">
+						<table class="kleineTabelle">
+							<tr class="kleineTabelle">
+								<th class="kleineTabelle">
+								</th>
+								<th class="kleineTabelle">
+									Mitarb.
+								</th>
+								<th class="kleineTabelle">
+									Roboter
+								</th>
+							</tr>
+							<tr class="kleineTabelle">
+								<td class="kleineTabelle">
+									Pos.-X
+								</td>
+								<td id="x_Mit" class="kleineTabelle">
+								</td>
+								<td id="x_Rob" class="kleineTabelle">
+								</td>
+							</tr>
+							<tr class="kleineTabelle">
+								<td class="kleineTabelle">
+									Pos.-Y
+								</td>
+								<td id="y_Mit" class="kleineTabelle">
+								</td>
+								<td id="y_Rob" class="kleineTabelle">
+								</td>
+							</tr>
+							<tr class="kleineTabelle">
+								<td class="kleineTabelle">
+									V
+								</td>
+								<td id="v_Mit" class="kleineTabelle">
+									100
+								</td>
+								<td id="v_Rob" class="kleineTabelle">
+								-/-
+								</td>
+							</tr>
+						
+						</table>
+						</div>
+						</center>
+					</td>
+					
+					
+				</tr>
+			</table>
+		
+		</div>
+	</body>
+	
+</html>

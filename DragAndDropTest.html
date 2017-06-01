@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang=de>
+<head>
+	<title>Drag and Drop Beispiel</title>
+	<meta charset="UTF-8">
+	<style>
+	html{
+		background-color: black;
+		color: green;
+	}
+	#div3  {
+		width: 200px;
+		height: 200px;
+		padding: 10px;
+		border: 2px solid green;
+		background-image: url("RoboAnsicht_200x200.jpg");
+		background-repeat:no-repeat;
+		background-position: center;
+		overflow: auto;
+	}
+
+	#div2{
+		width: 40px;
+		height: 40px;
+		padding: 5px;
+		border: 2px solid yellow;
+		overflow: auto;
+	}
+
+	#div1{
+		position: relative;
+		left:	60%;
+		top:	33%;
+		width: 40px;
+		height: 40px;
+		padding: 5px;
+		border: 4px solid red;
+	}
+
+	</style>
+	<script>
+			
+		function allowDrop(ev) {
+			ev.preventDefault();
+		}
+
+		function drag(ev) {
+			ev.dataTransfer.setData("text", ev.target.id);
+		}
+
+		function drop(ev) {
+			
+			ev.preventDefault();
+			var data = ev.dataTransfer.getData("text");
+			ev.target.appendChild(document.getElementById(data));
+			
+		}
+	</script>
+</head>
+<body>
+	<hr>
+	<p>Ziehen Sie den Greifer in die dafür vorgesehene Ansicht (rot)...</p>
+	<br>
+	<p>....Und wieder zurück in die Ablage (gelb)</p>
+	<hr>
+	<table>
+		<tr>	
+			<td>
+				<div id="div3">
+					<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+				</div>
+			</td>
+			<td>
+				<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+					<img id="drag1" src="3Finger_Pn.jpg" draggable="true" ondragstart="drag(event)" width="30" height="30">
+				</div>
+			</td>
+		</tr>
+	</table>
+			
+</body>
+</html>
